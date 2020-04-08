@@ -76,9 +76,10 @@ class SftpConnection:
 
 
 class TestAttribute:
-    def __init__(self, name):
+    def __init__(self, name, mode=33204):
         self.filename = name
         self.st_atime = time.time()
+        self.st_mode = mode
 
 
 class TestDocumentQuickAccessClassification(TransactionCase):

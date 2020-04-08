@@ -2,6 +2,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 import os
 import shutil
+import stat
 from odoo import api, models
 from odoo.modules.registry import Registry
 from odoo.addons.queue_job.job import job
@@ -78,6 +79,8 @@ class DocumentQuickAccessRule(models.Model):
             sftp.chdir(ssh_path)
         elements = sftp.listdir_attr(".")
         for element in elements:
+            if stat.S_ISDIR(element.st_mode):
+                continue
             obj = self
             new_element = element
             if not self.env.context.get('test_queue_job_no_delay', False):
